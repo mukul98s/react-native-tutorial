@@ -1,18 +1,19 @@
 import * as React from "react";
-import {Image, StyleSheet, Text, View} from "react-native";
+import {Image, ImageSourcePropType, StyleSheet, View} from "react-native";
+
 import colors from "../config/colors";
 import AppText from "./AppText";
 
 interface Props {
   title: string;
   subtitle: string;
-  image: string;
+  image: ImageSourcePropType;
 }
 
 const Card: React.FC<Props> = ({title, subtitle, image}) => {
   return (
     <View style={styles.card}>
-      <Image source={require(image)} />
+      <Image source={image} style={styles.image} />
       <View style={styles.detailsContainer}>
         <AppText style={styles.title}>{title}</AppText>
         <AppText>{subtitle}</AppText>
