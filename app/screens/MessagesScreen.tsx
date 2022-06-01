@@ -4,8 +4,16 @@ import ListItem from "../components/ListItem";
 import contants from "expo-constants";
 import Screen from "../components/Screen";
 import ListItemSeperator from "../components/ListItemSeperator";
+import ListItemDeleteAction from "../components/ListItemDeleteAction";
 
-const message = [
+interface Message {
+  id: number;
+  title: string;
+  description: string;
+  image: any;
+}
+
+const initialMessages: Message[] = [
   {
     id: 1,
     title: "James",
@@ -27,20 +35,36 @@ const message = [
 ];
 
 const MessagesScreen = () => {
+  const [messages, setMessages] = React.useState(initialMessages);
+  const [isRefreshing, setIsRefreshing] = React.useState(false);
+
+  const handleDelete = (item: Message) => {
+    setMessages((prev) => {
+      return prev.filter((m) => m.id !== item.id);
+    });
+  };
+
   return (
     <Screen>
       <FlatList
-        data={message}
+        data={messages}
         keyExtractor={(m) => m.title}
         renderItem={({item}) => (
           <ListItem
             image={item.image}
             subtitle={item.description}
             title={item.title}
-            onPress={() => console.log(`I Clicked ${item.title}`)}
+            onPress={() => console.log("Press")}
+            renderRightAction={() => (
+              <ListItemDeleteAction onPress={() => handleDelete(item)} />
+            )}
           />
         )}
         ItemSeparatorComponent={ListItemSeperator}
+        refreshing={isRefreshing}
+        onRefresh={() => {
+          setMessages(initialMessages);
+        }}
       />
     </Screen>
   );
