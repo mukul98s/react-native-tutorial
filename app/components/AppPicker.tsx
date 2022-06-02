@@ -3,10 +3,9 @@ import {
   View,
   StyleSheet,
   TouchableWithoutFeedback,
-  TouchableWithoutFeedbackProps,
   Modal,
-  Button,
   FlatList,
+  Button,
 } from "react-native";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
 
@@ -17,10 +16,10 @@ import Screen from "./Screen";
 import PickerItem from "./PickerItem";
 
 interface Props {
-  icon: IconType;
+  icon?: IconType;
   placeholder: string;
   items: any[];
-  selectedItem: {label: any; value: any};
+  selectedItem: {label: any; value: any} | null;
   onSelect: Function;
 }
 
@@ -45,11 +44,12 @@ const AppPicker: React.FC<Props> = ({
               color={colors.medium}
             />
           )}
-          <AppText style={styles.text}>
-            {selectedItem.hasOwnProperty("label")
-              ? selectedItem.label
-              : placeholder}
-          </AppText>
+          {selectedItem && selectedItem.hasOwnProperty("label") ? (
+            <AppText style={styles.text}>{selectedItem.label}</AppText>
+          ) : (
+            <AppText style={styles.placeholder}>{placeholder}</AppText>
+          )}
+
           {/*  @ts-ignore */}
           <MaterialCommunityIcons
             name="chevron-down"
@@ -60,12 +60,13 @@ const AppPicker: React.FC<Props> = ({
       </TouchableWithoutFeedback>
       <Modal visible={isModal} animationType="slide">
         <Screen>
+          <Button title="Close" onPress={() => setIsModal(false)} />
           <FlatList
             data={items}
-            keyExtractor={(item) => item?.value}
+            keyExtractor={item => item?.value}
             renderItem={({item}) => (
               <PickerItem
-                label={item.label}
+                label={item?.label}
                 onPress={() => {
                   setIsModal(false);
                   onSelect(item);
@@ -93,6 +94,10 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   text: {
+    flex: 1,
+  },
+  placeholder: {
+    color: colors.medium,
     flex: 1,
   },
 });
