@@ -11,16 +11,22 @@ import {MaterialCommunityIcons} from "@expo/vector-icons";
 
 import AppText from "./AppText";
 import colors from "../config/colors";
-import {IconType} from "../types/global";
+import {
+  IconType,
+  PickerItemType,
+  PicketItemComponentProps,
+} from "../types/global";
 import Screen from "./Screen";
 import PickerItem from "./PickerItem";
 
 interface Props {
   icon?: IconType;
   placeholder: string;
-  items: any[];
+  items: PickerItemType[];
   selectedItem: {label: any; value: any} | null;
   onSelect: Function;
+  PicketItemComponent?: React.FC<PicketItemComponentProps>;
+  numberOfColumns?: number;
 }
 
 const AppPicker: React.FC<Props> = ({
@@ -29,6 +35,8 @@ const AppPicker: React.FC<Props> = ({
   items,
   selectedItem,
   onSelect,
+  PicketItemComponent = PickerItem,
+  numberOfColumns = 1,
 }) => {
   const [isModal, setIsModal] = React.useState(false);
   return (
@@ -63,10 +71,11 @@ const AppPicker: React.FC<Props> = ({
           <Button title="Close" onPress={() => setIsModal(false)} />
           <FlatList
             data={items}
-            keyExtractor={item => item?.value}
+            keyExtractor={item => item.value.toString()}
+            numColumns={numberOfColumns}
             renderItem={({item}) => (
-              <PickerItem
-                label={item?.label}
+              <PicketItemComponent
+                item={item}
                 onPress={() => {
                   setIsModal(false);
                   onSelect(item);
