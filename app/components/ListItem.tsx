@@ -12,6 +12,7 @@ import AppText from "./AppText";
 import Swipeable, {
   SwipeableProps,
 } from "react-native-gesture-handler/Swipeable";
+import {MaterialCommunityIcons} from "@expo/vector-icons";
 
 interface Props {
   title: string;
@@ -38,11 +39,17 @@ const ListItem: React.FC<Props> = ({
             {IconComponent}
             {image && <Image style={styles.image} source={image} />}
             <View style={styles.detailsContainer}>
-              <AppText style={styles.title}>{title}</AppText>
+              <AppText style={styles.title} numberOfLines={1}>
+                {title}
+              </AppText>
               {subtitle && (
-                <AppText style={styles.subtitle}>{subtitle}</AppText>
+                <AppText style={styles.subTitle} numberOfLines={1}>
+                  {subtitle}
+                </AppText>
               )}
             </View>
+            {/* @ts-ignore */}
+            <MaterialCommunityIcons name="chevron-right" size={25} />
           </>
         </View>
       </TouchableHighlight>
@@ -52,25 +59,26 @@ const ListItem: React.FC<Props> = ({
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
     alignItems: "center",
-    padding: 10,
+    flexDirection: "row",
+    padding: 15,
     backgroundColor: colors.white,
+  },
+  detailsContainer: {
+    flex: 1,
+    marginLeft: 10,
+    justifyContent: "center",
   },
   image: {
     width: 70,
     height: 70,
     borderRadius: 35,
   },
-  title: {
-    fontWeight: "500",
-  },
-  subtitle: {
+  subTitle: {
     color: colors.medium,
   },
-  detailsContainer: {
-    marginLeft: 10,
-    justifyContent: "center",
+  title: {
+    fontWeight: "500",
   },
 });
 
