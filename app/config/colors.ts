@@ -8,4 +8,9 @@ export default {
   dark: "#0c0c0c",
   danger: "#ff5252",
   yellow: "#ffe66d",
+  orange: "#fd9644",
+  green: "#26de81",
+  light_blue: "#45aaf2",
+  dark_blue: "#4b7bec",
+  purple: "#a55eea",
 };
