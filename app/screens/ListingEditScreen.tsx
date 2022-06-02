@@ -7,6 +7,8 @@ import AppFormField from "../components/AppFormField";
 import AppFormPicker from "../components/AppFormPicker";
 import Screen from "../components/Screen";
 import SubmitButton from "../components/SubmitButton";
+import CategoryPickerItem from "../components/CategoryPickerItem";
+import {PickerItemType} from "../types/global";
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required().min(1).label("Title"),
@@ -15,10 +17,61 @@ const validationSchema = Yup.object().shape({
   category: Yup.object().required().nullable().label("Category"),
 });
 
-const categories = [
-  {label: "Furniture", value: 1},
-  {label: "Clothing", value: 2},
-  {label: "Camera", value: 3},
+const categories: PickerItemType[] = [
+  {
+    backgroundColor: "primary",
+    icon: "floor-lamp",
+    label: "Furniture",
+    value: 1,
+  },
+  {
+    backgroundColor: "orange",
+    icon: "car",
+    label: "Cars",
+    value: 2,
+  },
+  {
+    backgroundColor: "yellow",
+    icon: "camera",
+    label: "Cameras",
+    value: 3,
+  },
+  {
+    backgroundColor: "green",
+    icon: "cards",
+    label: "Games",
+    value: 4,
+  },
+  {
+    backgroundColor: "secondary",
+    icon: "shoe-heel",
+    label: "Clothing",
+    value: 5,
+  },
+  {
+    backgroundColor: "light_blue",
+    icon: "basketball",
+    label: "Sports",
+    value: 6,
+  },
+  {
+    backgroundColor: "dark_blue",
+    icon: "headphones",
+    label: "Movies & Music",
+    value: 7,
+  },
+  {
+    backgroundColor: "purple",
+    icon: "book-open-variant",
+    label: "Books",
+    value: 8,
+  },
+  {
+    backgroundColor: "medium",
+    icon: "application",
+    label: "Other",
+    value: 9,
+  },
 ];
 
 function ListingEditScreen() {
@@ -47,6 +100,8 @@ function ListingEditScreen() {
               items={categories}
               name="category"
               placeholder="Category"
+              PickerItemComponent={CategoryPickerItem}
+              numberOfColumn={3}
             />
             <AppFormField
               maxLength={255}
